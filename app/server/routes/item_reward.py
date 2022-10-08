@@ -6,6 +6,7 @@ from server.database import (
     add_item_reward,
     get_item_reward,
     # get_item_rewards
+    delete_item
 )
 from server.models.item_reward import (
     ErrorResponseModel,
@@ -30,3 +31,14 @@ async def get_item_reward_datas(id):
 async def get_item_reward_data():
     new_item_reward = await retrieve_run_reward()
     return ResponseModel(new_item_reward, "Item Reward added successfully.")
+
+@router.delete("/id")
+async def delete_item_reward_data(id):
+    deleted_item = await delete_item(id)
+    if deleted_item:
+        return ResponseModel(
+            "Item with ID: {} removed".format(id), "Item deleted successfully"
+        )
+    return ErrorResponseModel(
+        "An error occurred", 404, "Item with id {0} doesn't exist".format(id)
+    )

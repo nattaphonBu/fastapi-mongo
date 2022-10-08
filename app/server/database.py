@@ -31,3 +31,10 @@ async def add_item_reward(item_reward_data: dict) -> dict:
 async def get_item_reward(item_id: int) -> dict:
     item = await run_reward_collection.find_one({"_id": ObjectId(item_id)})
     return run_reward_helper(item)
+
+
+async def delete_item(item_id: int):
+    item = await run_reward_collection.find_one({"_id": ObjectId(item_id)})
+    if item:
+        await run_reward_collection.delete_one({"_id": ObjectId(item_id)})
+        return True
