@@ -27,3 +27,7 @@ async def add_item_reward(item_reward_data: dict) -> dict:
     item = await run_reward_collection.insert_one(item_reward_data)
     new_item = await run_reward_collection.find_one({"_id": item.inserted_id})
     return run_reward_helper(new_item)
+
+async def get_item_reward(item_id: int) -> dict:
+    item = await run_reward_collection.find_one({"_id": ObjectId(item_id)})
+    return run_reward_helper(item)
